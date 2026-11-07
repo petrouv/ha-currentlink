@@ -1,0 +1,179 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect TP-Link PG2400P",
+        "description": "Enter the IP address or hostname of your TP-Link PG2400P Powerline adapter and its web administration password.",
+        "data": {
+          "host": "Host / IP address",
+          "password": "Password"
+        },
+        "data_description": {
+          "host": "The IPv4 address or local DNS hostname of the adapter (for example, 192.0.2.10 or plc-main.local)."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Re-authenticate TP-Link PG2400P",
+        "description": "The administration password for {host} is invalid or has expired. Please enter the current password.",
+        "data": {
+          "password": "Password"
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigure TP-Link PG2400P",
+        "description": "Update the connection settings for {host}.",
+        "data": {
+          "host": "Host / IP address",
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the adapter. Verify the IP address and network connectivity.",
+      "invalid_auth": "Invalid administration password. Verify your credentials.",
+      "unknown": "An unexpected error occurred while communicating with the adapter."
+    },
+    "abort": {
+      "already_configured": "This TP-Link PG2400P adapter is already configured.",
+      "reauth_successful": "Re-authentication was successful.",
+      "reconfigure_successful": "Connection settings successfully updated."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "TP-Link PG2400P Options",
+        "description": "Configure telemetry polling settings for this adapter.",
+        "data": {
+          "scan_interval": "Polling interval (seconds)"
+        },
+        "data_description": {
+          "scan_interval": "How often to poll link metrics and G.hn telemetry (recommended: 15 to 60 seconds)."
+        }
+      }
+    },
+    "error": {
+      "invalid_scan_interval": "Enter a polling interval between 15 and 300 seconds."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "port1_speed": {
+        "name": "Ethernet port 1 speed"
+      },
+      "port2_speed": {
+        "name": "Ethernet port 2 speed"
+      },
+      "uptime": {
+        "name": "Uptime"
+      },
+      "attenuation": {
+        "name": "Line attenuation"
+      },
+      "wire_length": {
+        "name": "Estimated wire length"
+      },
+      "throughput": {
+        "name": "Throughput"
+      },
+      "retransmission_rate": {
+        "name": "Retransmission rate"
+      },
+      "receive_bler": {
+        "name": "Receive BLER"
+      },
+      "throughput_tx": {
+        "name": "Transmit throughput"
+      },
+      "throughput_rx": {
+        "name": "Receive throughput"
+      },
+      "bytes_tx": {
+        "name": "Transmit bytes"
+      },
+      "bytes_rx": {
+        "name": "Receive bytes"
+      },
+      "pkts_tx": {
+        "name": "Transmit packets"
+      },
+      "pkts_rx": {
+        "name": "Receive packets"
+      },
+      "blocks_tx": {
+        "name": "G.9962 TX blocks"
+      },
+      "blocks_rx": {
+        "name": "G.9962 RX blocks"
+      },
+      "blocks_rtx": {
+        "name": "G.9962 RTX blocks"
+      },
+      "blocks_error_rx": {
+        "name": "G.9962 RX error blocks"
+      },
+      "channel_adaptations": {
+        "name": "Channel adaptations"
+      },
+      "master_losses": {
+        "name": "Domain master losses"
+      },
+      "active_peers": {
+        "name": "Active peers"
+      },
+      "tx_rate": {
+        "name": "PHY transmit rate"
+      },
+      "rx_rate": {
+        "name": "PHY receive rate"
+      },
+      "phy_mode": {
+        "name": "PHY mode"
+      },
+      "compatibility_mode": {
+        "name": "VDSL compatibility mode"
+      },
+      "qos_mode": {
+        "name": "QoS mode"
+      }
+    },
+    "binary_sensor": {
+      "plc_link": {
+        "name": "Powerline link"
+      },
+      "power_saving": {
+        "name": "Power saving"
+      },
+      "xdsl_mitigation": {
+        "name": "xDSL interference mitigation"
+      }
+    },
+    "switch": {
+      "led": {
+        "name": "LED indicators"
+      },
+      "automatic_compatibility": {
+        "name": "Automatic compatibility"
+      }
+    },
+    "select": {
+      "phy_mode": {
+        "name": "PHY mode"
+      },
+      "vdsl_compatibility_mode": {
+        "name": "VDSL compatibility mode"
+      },
+      "qos_mode": {
+        "name": "QoS mode"
+      }
+    },
+    "button": {
+      "reboot": {
+        "name": "Reboot"
+      },
+      "soft_pair": {
+        "name": "Start pairing"
+      }
+    }
+  }
+}

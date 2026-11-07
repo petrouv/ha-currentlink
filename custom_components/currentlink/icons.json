@@ -1,0 +1,119 @@
+{
+  "entity": {
+    "binary_sensor": {
+      "plc_link": {
+        "default": "mdi:power-plug",
+        "state": {
+          "off": "mdi:power-plug-off"
+        }
+      },
+      "power_saving": {
+        "default": "mdi:power-sleep",
+        "state": {
+          "off": "mdi:power-sleep-off"
+        }
+      },
+      "xdsl_mitigation": {
+        "default": "mdi:filter-outline"
+      }
+    },
+    "button": {
+      "reboot": {
+        "default": "mdi:restart"
+      }
+    },
+    "select": {
+      "phy_mode": {
+        "default": "mdi:antenna"
+      },
+      "vdsl_compatibility_mode": {
+        "default": "mdi:transmission-tower"
+      },
+      "qos_mode": {
+        "default": "mdi:speedometer"
+      }
+    },
+    "sensor": {
+      "port1_speed": {
+        "default": "mdi:ethernet"
+      },
+      "port2_speed": {
+        "default": "mdi:ethernet"
+      },
+      "uptime": {
+        "default": "mdi:clock-outline"
+      },
+      "attenuation": {
+        "default": "mdi:waveform"
+      },
+      "wire_length": {
+        "default": "mdi:ruler"
+      },
+      "throughput": {
+        "default": "mdi:speedometer"
+      },
+      "retransmission_rate": {
+        "default": "mdi:backup-restore"
+      },
+      "receive_bler": {
+        "default": "mdi:alert-circle-outline"
+      },
+      "throughput_tx": {
+        "default": "mdi:upload-network"
+      },
+      "throughput_rx": {
+        "default": "mdi:download-network"
+      },
+      "bytes_tx": {
+        "default": "mdi:upload"
+      },
+      "bytes_rx": {
+        "default": "mdi:download"
+      },
+      "pkts_tx": {
+        "default": "mdi:arrow-up-bold-box-outline"
+      },
+      "pkts_rx": {
+        "default": "mdi:arrow-down-bold-box-outline"
+      },
+      "blocks_tx": {
+        "default": "mdi:cube-send"
+      },
+      "blocks_rx": {
+        "default": "mdi:cube-unfolded"
+      },
+      "blocks_rtx": {
+        "default": "mdi:cube-scan"
+      },
+      "blocks_error_rx": {
+        "default": "mdi:cube-off-outline"
+      },
+      "channel_adaptations": {
+        "default": "mdi:tune"
+      },
+      "master_losses": {
+        "default": "mdi:lan-disconnect"
+      },
+      "active_peers": {
+        "default": "mdi:account-network"
+      },
+      "tx_rate": {
+        "default": "mdi:upload-network"
+      },
+      "rx_rate": {
+        "default": "mdi:download-network"
+      }
+    },
+    "switch": {
+      "led": {
+        "default": "mdi:led-on",
+        "state": {
+          "off": "mdi:led-off"
+        }
+      },
+      "automatic_compatibility": {
+        "default": "mdi:auto-fix"
+      }
+    }
+  }
+}

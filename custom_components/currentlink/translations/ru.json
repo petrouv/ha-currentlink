@@ -1,0 +1,179 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Подключение TP-Link PG2400P",
+        "description": "Введите IP-адрес или DNS-имя адаптера Powerline TP-Link PG2400P и пароль администратора веб-интерфейса.",
+        "data": {
+          "host": "Хост / IP-адрес",
+          "password": "Пароль"
+        },
+        "data_description": {
+          "host": "IPv4-адрес или локальное DNS-имя адаптера (например, 192.0.2.10 или plc-main.local)."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Повторная аутентификация TP-Link PG2400P",
+        "description": "Пароль администратора для {host} недействителен или истёк. Введите актуальный пароль.",
+        "data": {
+          "password": "Пароль"
+        }
+      },
+      "reconfigure": {
+        "title": "Перенастройка TP-Link PG2400P",
+        "description": "Обновите параметры подключения для {host}.",
+        "data": {
+          "host": "Хост / IP-адрес",
+          "password": "Пароль"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Не удалось подключиться к адаптеру. Проверьте IP-адрес и доступность по сети.",
+      "invalid_auth": "Неверный пароль администратора. Проверьте правильность введённых данных.",
+      "unknown": "Произошла непредвиденная ошибка при обращении к адаптеру."
+    },
+    "abort": {
+      "already_configured": "Этот адаптер TP-Link PG2400P уже настроен в Home Assistant.",
+      "reauth_successful": "Повторная аутентификация успешно выполнена.",
+      "reconfigure_successful": "Параметры подключения успешно обновлены."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Параметры TP-Link PG2400P",
+        "description": "Настройка периодичности опроса телеметрии адаптера.",
+        "data": {
+          "scan_interval": "Интервал опроса (секунды)"
+        },
+        "data_description": {
+          "scan_interval": "Периодичность сбора метрик линии и телеметрии G.hn (рекомендуется от 15 до 60 секунд)."
+        }
+      }
+    },
+    "error": {
+      "invalid_scan_interval": "Укажите интервал опроса от 15 до 300 секунд."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "port1_speed": {
+        "name": "Скорость порта Ethernet 1"
+      },
+      "port2_speed": {
+        "name": "Скорость порта Ethernet 2"
+      },
+      "uptime": {
+        "name": "Время работы"
+      },
+      "attenuation": {
+        "name": "Затухание линии"
+      },
+      "wire_length": {
+        "name": "Расчётная длина линии"
+      },
+      "throughput": {
+        "name": "Пропускная способность"
+      },
+      "retransmission_rate": {
+        "name": "Частота повторов (RTX)"
+      },
+      "receive_bler": {
+        "name": "Частота ошибок блоков (BLER)"
+      },
+      "throughput_tx": {
+        "name": "Скорость полезной отдачи"
+      },
+      "throughput_rx": {
+        "name": "Скорость полезного приёма"
+      },
+      "bytes_tx": {
+        "name": "Передано байт"
+      },
+      "bytes_rx": {
+        "name": "Принято байт"
+      },
+      "pkts_tx": {
+        "name": "Передано пакетов"
+      },
+      "pkts_rx": {
+        "name": "Принято пакетов"
+      },
+      "blocks_tx": {
+        "name": "Передано блоков G.9962"
+      },
+      "blocks_rx": {
+        "name": "Принято блоков G.9962"
+      },
+      "blocks_rtx": {
+        "name": "Повторно передано блоков G.9962"
+      },
+      "blocks_error_rx": {
+        "name": "Ошибочных блоков G.9962"
+      },
+      "channel_adaptations": {
+        "name": "Адаптации канала"
+      },
+      "master_losses": {
+        "name": "Потери роли Domain Master"
+      },
+      "active_peers": {
+        "name": "Активные пиры"
+      },
+      "tx_rate": {
+        "name": "Скорость передачи PHY"
+      },
+      "rx_rate": {
+        "name": "Скорость приёма PHY"
+      },
+      "phy_mode": {
+        "name": "Режим PHY"
+      },
+      "compatibility_mode": {
+        "name": "Режим совместимости VDSL"
+      },
+      "qos_mode": {
+        "name": "Режим QoS"
+      }
+    },
+    "binary_sensor": {
+      "plc_link": {
+        "name": "Связь Powerline"
+      },
+      "power_saving": {
+        "name": "Режим энергосбережения"
+      },
+      "xdsl_mitigation": {
+        "name": "Подавление помех xDSL"
+      }
+    },
+    "switch": {
+      "led": {
+        "name": "Светодиодные индикаторы"
+      },
+      "automatic_compatibility": {
+        "name": "Автоматическая совместимость"
+      }
+    },
+    "select": {
+      "phy_mode": {
+        "name": "Режим PHY"
+      },
+      "vdsl_compatibility_mode": {
+        "name": "Режим совместимости VDSL"
+      },
+      "qos_mode": {
+        "name": "Режим QoS"
+      }
+    },
+    "button": {
+      "reboot": {
+        "name": "Перезагрузка"
+      },
+      "soft_pair": {
+        "name": "Запуск сопряжения"
+      }
+    }
+  }
+}

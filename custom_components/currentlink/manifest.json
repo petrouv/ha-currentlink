@@ -1,0 +1,18 @@
+{
+  "domain": "currentlink",
+  "name": "TP-Link Powerline – PG (G.hn)",
+  "categories": [
+    "computers_network.routers_network"
+  ],
+  "codeowners": [
+    "@petrouv"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/petrouv/ha-currentlink",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/petrouv/ha-currentlink/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}
