@@ -2,7 +2,7 @@
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/default)
 [![GitHub Release](https://img.shields.io/badge/release-v0.1.0-blue.svg)](https://github.com/petrouv/ha-currentlink/releases)
-[![Home Assistant](https://img.shields.io/badge/home--assistant-2024.4+-green.svg)](https://www.home-assistant.io/)
+[![Home Assistant](https://img.shields.io/badge/home--assistant-2024.11+-green.svg)](https://www.home-assistant.io/)
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=petrouv&repository=ha-currentlink&category=integration)
 [![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=currentlink)
@@ -33,7 +33,6 @@ This integration interfaces directly with the adapter's local web administration
   - Device restart command (`button.reboot`)
 - **Seamless Setup & Options**: Full Home Assistant UI Config Flow with re-authentication, reconfiguration, and adjustable scan interval (15 to 300 seconds).
 - **Diagnostics Support**: Native Home Assistant diagnostics export (`async_get_config_entry_diagnostics`) with automatic redaction of sensitive credentials, tokens, IP, and MAC addresses.
-- **State-Dependent Icons**: Full `icons.json` specification for dynamic entity iconography (LED on/off, link connect/disconnect, Ethernet speeds).
 
 ---
 
@@ -54,7 +53,7 @@ This integration interfaces directly with the adapter's local web administration
 
 ## Prerequisites
 
-- Home Assistant **2024.4.0** or newer.
+- Home Assistant **2024.11.0** or newer.
 - TP-Link PG2400P adapter reachable on your local network by IPv4 address or local DNS hostname.
 - Web administration password of the adapter.
 
