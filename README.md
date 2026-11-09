@@ -1,7 +1,7 @@
 # ha-currentlink: TP-Link Powerline – PG (G.hn)
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/default)
-[![GitHub Release](https://img.shields.io/badge/release-v0.1.1-blue.svg)](https://github.com/petrouv/ha-currentlink/releases)
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/default)
+[![GitHub Release](https://img.shields.io/badge/release-v0.1.2-blue.svg)](https://github.com/petrouv/ha-currentlink/releases)
 [![Home Assistant](https://img.shields.io/badge/home--assistant-2024.11+-green.svg)](https://www.home-assistant.io/)
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=petrouv&repository=ha-currentlink&category=integration)
@@ -218,6 +218,9 @@ cards:
 | `blocks_error_rx` | G.9962 RX error blocks | — | `blocks` | Diagnostic |
 | `channel_adaptations` | Channel adaptations | — | `events` | Diagnostic |
 | `master_losses` | Domain master losses | — | `losses` | Diagnostic |
+| `ethernet_errors` | Ethernet interface errors | — | `errors` | Diagnostic |
+| `qos_discarded_pkts` | QoS discarded packets | — | `pkts` | Diagnostic |
+| `llc_errors` | LLC errors | — | `errors` | Diagnostic |
 | `active_peers` | Active peers | — | `peers` | Primary |
 | `phy_mode` | PHY mode | — | — | Diagnostic |
 | `compatibility_mode` | VDSL compatibility mode | — | — | Diagnostic |

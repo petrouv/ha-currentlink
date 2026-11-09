@@ -142,6 +142,7 @@ class TelemetrySnapshot:
     eth_stats: dict[str, int]
     master_losses: int
     qos_discarded_pkts: int = 0
+    llc_errors: dict[str, int] = field(default_factory=dict)
     raw_fields: dict[str, str] = field(default_factory=dict)
 
 
@@ -411,7 +412,13 @@ def decode_telemetry_snapshot(
         raw_fields.get("ETHIFDRIVER.STATS.INFO", ""),
     )
 
-    # 8. Master Domain losses
+    # 8. LLC RX errors (CRC and cipher MIC errors)
+    llc_errors = _map_series(
+        raw_fields.get("QOS.STATS.RX_LLC_ERRORS_DESC", ""),
+        raw_fields.get("QOS.STATS.RX_LLC_ERRORS", ""),
+    )
+
+    # 9. Master Domain losses
     master_raw = raw_fields.get("MASTERSELECTION.STATS.INFO", "")
     master_vals = _parse_csv_integers(master_raw)
     master_losses = master_vals[2] if len(master_vals) > 2 else 0
@@ -427,6 +434,7 @@ def decode_telemetry_snapshot(
         eth_stats=eth_stats,
         master_losses=master_losses,
         qos_discarded_pkts=qos_discarded_pkts,
+        llc_errors=llc_errors,
         raw_fields=raw_fields,
     )
 

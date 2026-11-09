@@ -109,6 +109,15 @@
       "master_losses": {
         "name": "Domain master losses"
       },
+      "ethernet_errors": {
+        "name": "Ethernet interface errors"
+      },
+      "qos_discarded_pkts": {
+        "name": "QoS discarded packets"
+      },
+      "llc_errors": {
+        "name": "LLC errors"
+      },
       "active_peers": {
         "name": "Active peers"
       },

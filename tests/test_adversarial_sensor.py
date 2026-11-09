@@ -156,7 +156,7 @@ class TestAdversarialDynamicPeers:
             for e in er.async_entries_for_config_entry(registry, entry.entry_id)
             if e.domain == SENSOR_DOMAIN
         ]
-        assert len(initial_entries) == 26
+        assert len(initial_entries) == 29
 
         # 2. Появление нового пира (PEER_2)
         client.get_peers.return_value = [MOCK_PEER_1, MOCK_PEER_2]
@@ -173,7 +173,7 @@ class TestAdversarialDynamicPeers:
             for e in er.async_entries_for_config_entry(registry, entry.entry_id)
             if e.domain == SENSOR_DOMAIN
         ]
-        assert len(updated_entries) == 28  # +2 сенсора для PEER_2
+        assert len(updated_entries) == 31  # +2 сенсора для PEER_2
 
         # 3. Повторный опрос с теми же двумя пирами — проверка отсутствия дублей
         await coordinator.async_refresh()
@@ -184,7 +184,7 @@ class TestAdversarialDynamicPeers:
             for e in er.async_entries_for_config_entry(registry, entry.entry_id)
             if e.domain == SENSOR_DOMAIN
         ]
-        assert len(after_repeat_entries) == 28
+        assert len(after_repeat_entries) == 31
 
         # 4. Пир передается с верхним регистром MAC — не должен дублироваться
         peer_2_upper = dataclasses.replace(MOCK_PEER_2, peer_mac=PEER_2_MAC.upper())
@@ -197,7 +197,7 @@ class TestAdversarialDynamicPeers:
             for e in er.async_entries_for_config_entry(registry, entry.entry_id)
             if e.domain == SENSOR_DOMAIN
         ]
-        assert len(after_upper_entries) == 28
+        assert len(after_upper_entries) == 31
 
         # 5. PEER_2 помечен неактивным (active=False) -> статус unavailable
         peer_2_inactive = dataclasses.replace(MOCK_PEER_2, active=False)
@@ -268,7 +268,7 @@ class TestAdversarialDynamicPeers:
             for e in er.async_entries_for_config_entry(registry, entry.entry_id)
             if e.domain == SENSOR_DOMAIN
         ]
-        assert len(final_entries) == 30  # 24 статических + 2*3 пира
+        assert len(final_entries) == 33  # 27 статических + 2*3 пира
 
 
 class TestAdversarialNoneAndUncalculatedValues:
@@ -432,6 +432,9 @@ class TestAdversarialNoneAndUncalculatedValues:
             "blocks_error_rx",
             "channel_adaptations",
             "master_losses",
+            "ethernet_errors",
+            "qos_discarded_pkts",
+            "llc_errors",
             "active_peers",
         )
         for key in static_keys:
@@ -446,6 +449,9 @@ class TestAdversarialNoneAndUncalculatedValues:
         assert _get_sensor_state(hass, registry, "bytes_tx").state == STATE_UNKNOWN
         assert _get_sensor_state(hass, registry, "channel_adaptations").state == "0"
         assert _get_sensor_state(hass, registry, "master_losses").state == "0"
+        assert _get_sensor_state(hass, registry, "ethernet_errors").state == "0"
+        assert _get_sensor_state(hass, registry, "qos_discarded_pkts").state == "0"
+        assert _get_sensor_state(hass, registry, "llc_errors").state == "0"
         assert _get_sensor_state(hass, registry, "active_peers").state == "1"
 
 

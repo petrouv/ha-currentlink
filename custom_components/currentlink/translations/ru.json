@@ -109,6 +109,15 @@
       "master_losses": {
         "name": "Потери роли Domain Master"
       },
+      "ethernet_errors": {
+        "name": "Ошибки интерфейсов Ethernet"
+      },
+      "qos_discarded_pkts": {
+        "name": "Отброшено пакетов QoS"
+      },
+      "llc_errors": {
+        "name": "Ошибки LLC"
+      },
       "active_peers": {
         "name": "Активные пиры"
       },

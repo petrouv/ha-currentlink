@@ -94,6 +94,15 @@
       "master_losses": {
         "default": "mdi:lan-disconnect"
       },
+      "ethernet_errors": {
+        "default": "mdi:alert-network-outline"
+      },
+      "qos_discarded_pkts": {
+        "default": "mdi:package-variant-remove"
+      },
+      "llc_errors": {
+        "default": "mdi:shield-alert-outline"
+      },
       "active_peers": {
         "default": "mdi:account-network"
       },

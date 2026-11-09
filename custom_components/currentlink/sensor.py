@@ -40,6 +40,18 @@ PORT_SPEED_OPTIONS = [
     "1000M Full",
 ]
 
+ETH_ERROR_KEYS: tuple[str, ...] = (
+    "ETHA Tx errors",
+    "ETHA Rx errors",
+    "ETHB Tx errors",
+    "ETHB Rx errors",
+)
+
+ETH_QUEUE_KEYS: tuple[str, ...] = (
+    "ETHA Out Queue Full",
+    "ETHB Out Queue Full",
+)
+
 
 @dataclass(frozen=True, kw_only=True)
 class PG2400PSensorEntityDescription(SensorEntityDescription):
@@ -275,6 +287,50 @@ STATIC_SENSOR_DESCRIPTIONS: tuple[PG2400PSensorEntityDescription, ...] = (
         state_class=SensorStateClass.TOTAL_INCREASING,
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda data: data.telemetry.master_losses if data.telemetry else 0,
+    ),
+    PG2400PSensorEntityDescription(
+        key="ethernet_errors",
+        translation_key="ethernet_errors",
+        native_unit_of_measurement="errors",
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda data: (
+            sum(data.telemetry.eth_stats.get(k, 0) for k in ETH_ERROR_KEYS)
+            if data.telemetry and data.telemetry.eth_stats
+            else 0
+        ),
+        extra_state_attributes_fn=lambda data: (
+            {
+                k: data.telemetry.eth_stats[k]
+                for k in (*ETH_ERROR_KEYS, *ETH_QUEUE_KEYS)
+                if k in data.telemetry.eth_stats
+            }
+            if data.telemetry and data.telemetry.eth_stats
+            else {}
+        ),
+    ),
+    PG2400PSensorEntityDescription(
+        key="qos_discarded_pkts",
+        translation_key="qos_discarded_pkts",
+        native_unit_of_measurement="pkts",
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda data: data.telemetry.qos_discarded_pkts if data.telemetry else 0,
+    ),
+    PG2400PSensorEntityDescription(
+        key="llc_errors",
+        translation_key="llc_errors",
+        native_unit_of_measurement="errors",
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda data: (
+            sum(data.telemetry.llc_errors.values())
+            if data.telemetry and data.telemetry.llc_errors
+            else 0
+        ),
+        extra_state_attributes_fn=lambda data: (
+            data.telemetry.llc_errors if data.telemetry else {}
+        ),
     ),
     # 6. Peer topology
     PG2400PSensorEntityDescription(

@@ -139,8 +139,8 @@ class TestSensorPlatform:
         entries = er.async_entries_for_config_entry(registry, entry.entry_id)
         sensor_entries = [e for e in entries if e.domain == SENSOR_DOMAIN]
 
-        # Должно быть ровно 26 сенсоров (24 статических + 2 для пира)
-        assert len(sensor_entries) == 26
+        # Должно быть ровно 29 сенсоров (27 статических + 2 для пира)
+        assert len(sensor_entries) == 29
 
         translation_keys = {e.translation_key for e in sensor_entries if e.translation_key}
         expected_keys = {
@@ -164,6 +164,9 @@ class TestSensorPlatform:
             "blocks_error_rx",
             "channel_adaptations",
             "master_losses",
+            "ethernet_errors",
+            "qos_discarded_pkts",
+            "llc_errors",
             "active_peers",
             "tx_rate",
             "rx_rate",
@@ -265,6 +268,24 @@ class TestSensorPlatform:
         s_master = _get_sensor_state(hass, registry, "master_losses")
         assert int(s_master.state) == 1
         assert s_master.attributes.get("unit_of_measurement") == "losses"
+
+        s_eth_err = _get_sensor_state(hass, registry, "ethernet_errors")
+        assert int(s_eth_err.state) == 4  # ETHA Tx errors (1) + ETHB Tx errors (3)
+        assert s_eth_err.attributes.get("unit_of_measurement") == "errors"
+        assert s_eth_err.attributes.get("ETHA Tx errors") == 1
+        assert s_eth_err.attributes.get("ETHB Tx errors") == 3
+        assert s_eth_err.attributes.get("ETHA Out Queue Full") == 60
+        assert s_eth_err.attributes.get("ETHB Out Queue Full") == 27
+
+        s_qos_disc = _get_sensor_state(hass, registry, "qos_discarded_pkts")
+        assert int(s_qos_disc.state) == 183
+        assert s_qos_disc.attributes.get("unit_of_measurement") == "pkts"
+
+        s_llc_err = _get_sensor_state(hass, registry, "llc_errors")
+        assert int(s_llc_err.state) == 0
+        assert s_llc_err.attributes.get("unit_of_measurement") == "errors"
+        assert s_llc_err.attributes.get("LLC_CRC_ERRORS") == 0
+        assert s_llc_err.attributes.get("LLC_CIPHER_MIC_ERRORS") == 0
 
         # 6. Топология
         s_peers = _get_sensor_state(hass, registry, "active_peers")
