@@ -1,7 +1,7 @@
 # ha-currentlink: TP-Link Powerline – PG (G.hn)
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/default)
-[![GitHub Release](https://img.shields.io/badge/release-v0.1.0-blue.svg)](https://github.com/petrouv/ha-currentlink/releases)
+[![GitHub Release](https://img.shields.io/badge/release-v0.1.1-blue.svg)](https://github.com/petrouv/ha-currentlink/releases)
 [![Home Assistant](https://img.shields.io/badge/home--assistant-2024.11+-green.svg)](https://www.home-assistant.io/)
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=petrouv&repository=ha-currentlink&category=integration)
@@ -31,7 +31,7 @@ This integration interfaces directly with the adapter's local web administration
   - VDSL coexistence profile selector (`select.vdsl_compatibility_mode`: Full Power, VDSL 17a, VDSL 35b)
   - Quality of Service (QoS) priority selector (`select.qos_mode`: Fair, Gaming, Streaming, Voice)
   - Device restart command (`button.reboot`)
-- **Seamless Setup & Options**: Full Home Assistant UI Config Flow with re-authentication, reconfiguration, and adjustable scan interval (15 to 300 seconds).
+- **Seamless Setup & Options**: Full Home Assistant UI Config Flow with re-authentication and adjustable scan interval (15 to 300 seconds).
 - **Diagnostics Support**: Native Home Assistant diagnostics export (`async_get_config_entry_diagnostics`) with automatic redaction of sensitive credentials, tokens, IP, and MAC addresses.
 
 ---
@@ -136,22 +136,22 @@ cards:
         entity: binary_sensor.plc_main_powerline_link
         name: G.hn Link
       - type: tile
-        entity: sensor.plc_main_estimated_throughput
+        entity: sensor.plc_main_throughput
         name: Throughput
 
   - type: horizontal-stack
     cards:
       - type: tile
-        entity: sensor.plc_main_plc_rx_rate
-        name: PLC RX Rate
+        entity: sensor.plc_main_phy_receive_rate
+        name: PHY RX Rate
       - type: tile
-        entity: sensor.plc_main_plc_tx_rate
-        name: PLC TX Rate
+        entity: sensor.plc_main_phy_transmit_rate
+        name: PHY TX Rate
 
   - type: horizontal-stack
     cards:
       - type: tile
-        entity: sensor.plc_main_average_attenuation
+        entity: sensor.plc_main_line_attenuation
         name: Attenuation
       - type: tile
         entity: sensor.plc_main_estimated_wire_length
@@ -161,20 +161,20 @@ cards:
   - type: horizontal-stack
     cards:
       - type: tile
-        entity: sensor.plc_main_port_1_speed
+        entity: sensor.plc_main_ethernet_port_1_speed
         name: Port 1
       - type: tile
-        entity: sensor.plc_main_port_2_speed
+        entity: sensor.plc_main_ethernet_port_2_speed
         name: Port 2
 
   # Hardware controls
   - type: horizontal-stack
     cards:
       - type: tile
-        entity: switch.plc_main_led
+        entity: switch.plc_main_led_indicators
         name: Front LEDs
       - type: tile
-        entity: switch.plc_main_automatic_vdsl_mitigation
+        entity: switch.plc_main_automatic_compatibility
         name: Auto VDSL
 
   # Live throughput history graph
@@ -182,12 +182,12 @@ cards:
     title: Powerline Throughput (Last 24h)
     hours_to_show: 24
     entities:
-      - entity: sensor.plc_main_estimated_throughput
+      - entity: sensor.plc_main_throughput
         name: Throughput (Mbps)
-      - entity: sensor.plc_main_rx_traffic_rate
-        name: RX Rate (Mbps)
-      - entity: sensor.plc_main_tx_traffic_rate
-        name: TX Rate (Mbps)
+      - entity: sensor.plc_main_receive_throughput
+        name: RX Throughput (Mbps)
+      - entity: sensor.plc_main_transmit_throughput
+        name: TX Throughput (Mbps)
 ```
 
 ---
@@ -198,44 +198,51 @@ cards:
 
 | Entity Key | Name | Device Class | Unit | Category |
 | :--- | :--- | :--- | :--- | :--- |
-| `port1_speed` | Port 1 Speed | `enum` | — | Diagnostic |
-| `port2_speed` | Port 2 Speed | `enum` | — | Diagnostic |
+| `port1_speed` | Ethernet port 1 speed | `enum` | — | Diagnostic |
+| `port2_speed` | Ethernet port 2 speed | `enum` | — | Diagnostic |
 | `uptime` | Uptime | `timestamp` | — | Diagnostic |
-| `attenuation` | Average Attenuation | `signal_strength` | dB | Diagnostic |
-| `wire_length` | Estimated Wire Length | `distance` | m | Diagnostic |
-| `plc_rx_rate` | PLC RX Rate | `data_rate` | Mbit/s | Diagnostic |
-| `plc_tx_rate` | PLC TX Rate | `data_rate` | Mbit/s | Diagnostic |
-| `bler` | Block Error Rate | — | % | Diagnostic |
-| `retransmission_rate` | Retransmission Rate | — | % | Diagnostic |
-| `throughput` | Estimated Throughput | `data_rate` | Mbit/s | Diagnostic |
-| `rx_bytes` / `tx_bytes` | Bytes Received / Sent | `data_size` | B / MB | Diagnostic |
-| `rx_packets` / `tx_packets` | Packets Received / Sent | — | packets | Diagnostic |
-| `rx_errors` / `tx_errors` | RX / TX Error Packets | — | packets | Diagnostic |
-| `byte_rate_rx` / `byte_rate_tx` | RX / TX Traffic Rate | `data_rate` | Mbit/s | Telemetry |
-| `packet_rate_rx` / `tx` | RX / TX Packet Rate | — | pkts/s | Telemetry |
-| `{peer_mac}_rx_rate` | Peer {peer_mac} RX Rate | `data_rate` | Mbit/s | Peer Sensor |
-| `{peer_mac}_tx_rate` | Peer {peer_mac} TX Rate | `data_rate` | Mbit/s | Peer Sensor |
-| `{peer_mac}_attenuation` | Peer {peer_mac} Attenuation | `signal_strength` | dB | Peer Sensor |
-| `{peer_mac}_wire_length` | Peer {peer_mac} Wire Length | `distance` | m | Peer Sensor |
+| `attenuation` | Line attenuation | `signal_strength` | `dB` | Diagnostic |
+| `wire_length` | Estimated wire length | `distance` | `m` | Diagnostic |
+| `throughput` | Throughput | `data_rate` | `Mbit/s` | Primary |
+| `retransmission_rate` | Retransmission rate | — | `%` | Diagnostic |
+| `receive_bler` | Receive BLER | — | `%` | Diagnostic |
+| `throughput_tx` | Transmit throughput | `data_rate` | `Mbit/s` | Diagnostic |
+| `throughput_rx` | Receive throughput | `data_rate` | `Mbit/s` | Diagnostic |
+| `bytes_tx` | Transmit bytes | `data_size` | `B` | Diagnostic |
+| `bytes_rx` | Receive bytes | `data_size` | `B` | Diagnostic |
+| `pkts_tx` | Transmit packets | — | `pkts` | Diagnostic |
+| `pkts_rx` | Receive packets | — | `pkts` | Diagnostic |
+| `blocks_tx` | G.9962 TX blocks | — | `blocks` | Diagnostic |
+| `blocks_rx` | G.9962 RX blocks | — | `blocks` | Diagnostic |
+| `blocks_rtx` | G.9962 RTX blocks | — | `blocks` | Diagnostic |
+| `blocks_error_rx` | G.9962 RX error blocks | — | `blocks` | Diagnostic |
+| `channel_adaptations` | Channel adaptations | — | `events` | Diagnostic |
+| `master_losses` | Domain master losses | — | `losses` | Diagnostic |
+| `active_peers` | Active peers | — | `peers` | Primary |
+| `phy_mode` | PHY mode | — | — | Diagnostic |
+| `compatibility_mode` | VDSL compatibility mode | — | — | Diagnostic |
+| `qos_mode` | QoS mode | — | — | Diagnostic |
+| `tx_rate` | PHY transmit rate (per peer) | `data_rate` | `Mbit/s` | Peer Sensor |
+| `rx_rate` | PHY receive rate (per peer) | `data_rate` | `Mbit/s` | Peer Sensor |
 
 ### Binary Sensors
 
 | Entity Key | Name | Device Class | Description |
 | :--- | :--- | :--- | :--- |
-| `plc_link` | Powerline Link | `connectivity` | Active when at least one remote peer is linked |
-| `power_saving` | Power Saving | `power` | Active during LAN/traffic power-saving standby |
-| `xdsl_mitigation` | xDSL Interference Mitigation | — | Diagnostic indicator for VDSL notch mitigation |
+| `plc_link` | Powerline link | `connectivity` | Active when at least one remote peer is linked |
+| `power_saving` | Power saving | `power` | Active during LAN/traffic power-saving standby |
+| `xdsl_mitigation` | xDSL interference mitigation | — | Diagnostic indicator for VDSL notch mitigation |
 
 ### Controls
 
-| Entity Key | Type | Description |
-| :--- | :--- | :--- |
-| `led` | `switch` | Turn front panel status LEDs on or off |
-| `automatic_compatibility` | `switch` | Toggle automatic VDSL coexistence mitigation |
-| `phy_mode` | `select` | Switch between `MIMO` and `SISO` operation |
-| `vdsl_compatibility_mode` | `select` | Choose VDSL notch profile (`Full Power`, `VDSL 17a`, `VDSL 35b`) |
-| `qos_mode` | `select` | Select QoS priority profile (`Fair`, `Gaming`, `Streaming`, `Voice`) |
-| `reboot` | `button` | Issue a soft restart command to the adapter |
+| Entity Key | Type | Name | Description |
+| :--- | :--- | :--- | :--- |
+| `led` | `switch` | LED indicators | Turn front panel status LEDs on or off |
+| `automatic_compatibility` | `switch` | Automatic compatibility | Toggle automatic VDSL coexistence mitigation |
+| `phy_mode` | `select` | PHY mode | Switch between `MIMO` and `SISO` operation |
+| `vdsl_compatibility_mode` | `select` | VDSL compatibility mode | Choose VDSL notch profile (`Full Power`, `VDSL 17a`, `VDSL 35b`) |
+| `qos_mode` | `select` | QoS mode | Select QoS priority profile (`Fair`, `Gaming`, `Streaming`, `Voice`) |
+| `reboot` | `button` | Reboot | Issue a soft restart command to the adapter |
 
 ---
 

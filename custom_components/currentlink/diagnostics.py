@@ -18,15 +18,20 @@ TO_REDACT = {
     CONF_HOST,
     "password",
     "host",
+    "unique_id",
+    "title",
     "ip_address",
     "mac_address",
     "peer_mac",
+    "peer_macs",
+    "active_peer_macs",
     "macs",
     "TOKEN",
     "token",
     "TCPIP.IPV4.IP_ADDRESS",
     "SYSTEM.PRODUCTION.MAC_ADDR",
     "DIDMNG.GENERAL.MACS",
+    "DIDMNG.GENERAL.DIDS",
 }
 
 

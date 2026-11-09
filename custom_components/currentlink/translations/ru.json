@@ -18,14 +18,6 @@
         "data": {
           "password": "Пароль"
         }
-      },
-      "reconfigure": {
-        "title": "Перенастройка TP-Link PG2400P",
-        "description": "Обновите параметры подключения для {host}.",
-        "data": {
-          "host": "Хост / IP-адрес",
-          "password": "Пароль"
-        }
       }
     },
     "error": {
@@ -35,8 +27,7 @@
     },
     "abort": {
       "already_configured": "Этот адаптер TP-Link PG2400P уже настроен в Home Assistant.",
-      "reauth_successful": "Повторная аутентификация успешно выполнена.",
-      "reconfigure_successful": "Параметры подключения успешно обновлены."
+      "reauth_successful": "Повторная аутентификация успешно выполнена."
     }
   },
   "options": {
@@ -170,9 +161,6 @@
     "button": {
       "reboot": {
         "name": "Перезагрузка"
-      },
-      "soft_pair": {
-        "name": "Запуск сопряжения"
       }
     }
   }

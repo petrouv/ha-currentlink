@@ -18,14 +18,6 @@
         "data": {
           "password": "Password"
         }
-      },
-      "reconfigure": {
-        "title": "Reconfigure TP-Link PG2400P",
-        "description": "Update the connection settings for {host}.",
-        "data": {
-          "host": "Host / IP address",
-          "password": "Password"
-        }
       }
     },
     "error": {
@@ -35,8 +27,7 @@
     },
     "abort": {
       "already_configured": "This TP-Link PG2400P adapter is already configured.",
-      "reauth_successful": "Re-authentication was successful.",
-      "reconfigure_successful": "Connection settings successfully updated."
+      "reauth_successful": "Re-authentication was successful."
     }
   },
   "options": {
@@ -170,9 +161,6 @@
     "button": {
       "reboot": {
         "name": "Reboot"
-      },
-      "soft_pair": {
-        "name": "Start pairing"
       }
     }
   }

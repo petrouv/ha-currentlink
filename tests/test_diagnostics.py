@@ -58,7 +58,10 @@ def _build_sample_data() -> PG2400PData:
             eth_stats={},
             master_losses=0,
             qos_discarded_pkts=0,
-            raw_fields={"TCPIP.IPV4.IP_ADDRESS": "192.0.2.10"},
+            raw_fields={
+                "TCPIP.IPV4.IP_ADDRESS": "192.0.2.10",
+                "DIDMNG.GENERAL.DIDS": "0,1",
+            },
         ),
         telemetry_interval=TelemetryInterval(
             duration_seconds=30.0,
@@ -87,7 +90,8 @@ async def test_diagnostics_redacts_sensitive_data(hass: HomeAssistant) -> None:
     """Test diagnostics redacts passwords, host, IPs and MAC addresses."""
     entry = MockConfigEntry(
         domain=DOMAIN,
-        title="TP-Link PG2400P (Test)",
+        title="TP-Link PG2400P (aa:bb:cc:dd:ee:ff)",
+        unique_id="aa:bb:cc:dd:ee:ff",
         data={
             CONF_HOST: "192.0.2.10",
             CONF_PASSWORD: "SuperSecretPassword123!",
@@ -107,6 +111,8 @@ async def test_diagnostics_redacts_sensitive_data(hass: HomeAssistant) -> None:
     assert "data" in diag
 
     # Verify entry redaction
+    assert diag["entry"]["title"] == REDACTED
+    assert diag["entry"]["unique_id"] == REDACTED
     entry_data = diag["entry"]["data"]
     assert entry_data[CONF_PASSWORD] == REDACTED
     assert entry_data[CONF_HOST] == REDACTED
@@ -129,6 +135,7 @@ async def test_diagnostics_redacts_sensitive_data(hass: HomeAssistant) -> None:
     # Verify raw fields redaction
     raw_fields = coordinator_data["telemetry"]["raw_fields"]
     assert raw_fields["TCPIP.IPV4.IP_ADDRESS"] == REDACTED
+    assert raw_fields["DIDMNG.GENERAL.DIDS"] == REDACTED
 
     # Verify non-sensitive telemetry remains intact
     assert coordinator_data["telemetry"]["attenuation_db"] == 18.5

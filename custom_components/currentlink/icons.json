@@ -102,6 +102,15 @@
       },
       "rx_rate": {
         "default": "mdi:download-network"
+      },
+      "phy_mode": {
+        "default": "mdi:antenna"
+      },
+      "compatibility_mode": {
+        "default": "mdi:transmission-tower"
+      },
+      "qos_mode": {
+        "default": "mdi:speedometer"
       }
     },
     "switch": {
